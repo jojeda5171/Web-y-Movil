@@ -1,0 +1,20 @@
+<cmv-title></cmv-title>
+<cmv-container>
+  <perfect-scrollbar class="heighMax">
+    <cmv-table [data]="data" [metaDataColumns]="metaDataColumns"></cmv-table>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-iconbutton color="primary" (click)="openForm()" matTooltip="EDITAR">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-iconbutton color="accent" (click)="delete(row.id)" matTooltip="ELIMINAR">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+  </perfect-scrollbar>
+
+  <cmv-paginator (onChangePage)="changePage($event)" [length]="totalRecords"></cmv-paginator>
+
+</cmv-container>

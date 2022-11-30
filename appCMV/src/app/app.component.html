@@ -1,0 +1,13 @@
+<mat-sidenav-container autosize="true">
+  <mat-sidenav opened="true" mode="side">
+    <div class="opciones">
+      <h3 *ngIf="expanded">Opciones del Sistema</h3>
+    </div>
+    <cmv-menu (onToggleExpanded)="toggleExpanded($event)"></cmv-menu>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <cmv-header></cmv-header>
+    <!-- <cmv-page-login></cmv-page-login> -->
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

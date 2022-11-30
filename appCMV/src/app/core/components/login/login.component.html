@@ -1,0 +1,19 @@
+<form fxLayout="column">
+  <h2>Credenciales</h2>
+  <mat-form-field appearance="outline">
+    <mat-label>Usuario</mat-label>
+    <input matInput type="text" placeholder="Ingrese el Usuario" required>
+    <mat-icon matSuffix>person</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Contraseña</mat-label>
+    <input matInput type="{{hidePassword?'password':'text'}}" placeholder="Ingrese la contraseña" required>
+
+    <button mat-icon-button type="button" matSuffix (click)="hidePassword=!hidePassword">
+      <mat-icon>{{hidePassword?"lock":"lock_open"}}</mat-icon>
+    </button>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary">Iniciar Sesion</button>
+</form>
