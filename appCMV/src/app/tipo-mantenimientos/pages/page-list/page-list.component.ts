@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MetaDataColumn } from 'src/app/shared/interfaces/metacolumn.interface';
 import { environment } from 'src/environments/environment';
+import { KeypadButton } from 'src/app/shared/interfaces/keypad.interface';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { DownloadComponent } from 'src/app/shared/components/download/download.component';
 
 @Component({
   selector: 'cmv-page-list',
@@ -36,7 +39,12 @@ export class PageListComponent implements OnInit {
   data: any[] = [];
   totalRecords = this.data.length;
 
-  constructor() {
+  keypadButtons: KeypadButton[] = [
+    { icon: "cloud_download", tooltip: "EXPORTAR", color: "accent", action: "DOWNLOAD" },
+    { icon: "add", tooltip: "AGREGAR", color: "primary", action: "NEW" }
+  ]
+
+  constructor(private bottomSheet: MatBottomSheet) {
     this.loadMaintenance();
   }
 
@@ -60,5 +68,24 @@ export class PageListComponent implements OnInit {
 
   delete(id: any) {
 
+  }
+
+  doAction(action: string) {
+    switch (action) {
+      case "DOWNLOAD":
+        this.showBottomSheet("Lista de Mantenimientos", "Mantenimientos", this.records, this.metaDataColumns);
+        break;
+      case "NEW":
+        this.openForm();
+        break;
+    }
+  }
+
+  showBottomSheet(title: string, fileName: string, data: any, header:any) {
+    this.bottomSheet.open(DownloadComponent);
+    DownloadComponent.title = title;
+    DownloadComponent.fileName = fileName;
+    DownloadComponent.data = data;
+    DownloadComponent.header = header;
   }
 }

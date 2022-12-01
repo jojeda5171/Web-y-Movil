@@ -1,18 +1,9 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { BREAKPOINT } from '@angular/flex-layout';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { DownloadComponent } from 'src/app/shared/components/download/download.component';
-import { TableComponent } from 'src/app/shared/components/table/table.component';
 import { KeypadButton } from 'src/app/shared/interfaces/keypad.interface';
 import { MetaDataColumn } from 'src/app/shared/interfaces/metacolumn.interface';
 import { environment } from 'src/environments/environment';
-
-import pdfMake from 'pdfmake/build/pdfmake';
-import pdfFonts from 'pdfmake/build/vfs_fonts';
-import { AgencyServiceService } from 'src/app/services/agencyService.service';
-pdfMake.vfs = pdfFonts.pdfMake.vfs;
-
-//import { PdfMakeWrapper } from 'pdfmake-wrapper';
 
 @Component({
   selector: 'cmv-page-list',
@@ -20,7 +11,7 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
   styleUrls: ['./page-list.component.css']
 })
 export class PageListComponent implements OnInit {
-  /* records: any[] = [
+  records: any[] = [
     { _id: 1, name: 'Ambato', address: 'Calle A' },
     { _id: 2, name: 'Riobamba', address: 'Calle B' },
     { _id: 3, name: 'Quito', address: 'Calle C' },
@@ -47,7 +38,7 @@ export class PageListComponent implements OnInit {
     { _id: 24, name: 'Puyo', address: 'Calle X' },
     { _id: 25, name: 'Puerto Francisco de Orellana', address: 'Calle Y' },
     { _id: 26, name: 'Puerto Baquerizo Moreno', address: 'Calle Z' }
-  ]; */
+  ];
 
   metaDataColumns: MetaDataColumn[] = [
     { field: "_id", title: "Id" },
@@ -63,10 +54,7 @@ export class PageListComponent implements OnInit {
     { icon: "add", tooltip: "AGREGAR", color: "primary", action: "NEW" }
   ]
 
-  records:any[]=[];
-
-  constructor(private bottomSheet: MatBottomSheet, private agencyService: AgencyServiceService) {
-    this.records=this.agencyService.getRecords();
+  constructor(private bottomSheet: MatBottomSheet) {
     this.loadAgencies();
   }
 
@@ -91,7 +79,7 @@ export class PageListComponent implements OnInit {
   doAction(action: string) {
     switch (action) {
       case "DOWNLOAD":
-        this.showBottomSheet("Lista de Agencias", "Agencias", this.records);
+        this.showBottomSheet("Lista de Agencias", "Agencias", this.records, this.metaDataColumns);
         break;
       case "NEW":
         this.openForm();
@@ -99,26 +87,11 @@ export class PageListComponent implements OnInit {
     }
   }
 
-  showBottomSheet(title: string, fileName: string, data: any) {
+  showBottomSheet(title: string, fileName: string, data: any, header:any) {
     this.bottomSheet.open(DownloadComponent);
+    DownloadComponent.title = title;
+    DownloadComponent.fileName = fileName;
+    DownloadComponent.data = data;
+    DownloadComponent.header = header;
   }
-
-  openPdpTables() {
-    const documentDefinition = {
-      content: [
-        {
-          table: {
-            headerRows: 1,
-            widths: ['*', '*', '*'],
-            body: [
-              [this.metaDataColumns[0].title, this.metaDataColumns[1].title, this.metaDataColumns[2].title],
-              ...this.records.map((item) => [item._id, item.name, item.address])
-            ]
-          }
-        }
-      ]
-    };
-    pdfMake.createPdf(documentDefinition).open();
-  }
-
 }

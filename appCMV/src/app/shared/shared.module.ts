@@ -44,7 +44,7 @@ import { MatTableExporterModule } from 'mat-table-exporter';
     MatTooltipModule,
     MatBottomSheetModule,
     MatListModule,
-    MatTableExporterModule
+    MatTableExporterModule,
   ],
   exports: [
     TitleComponent,
