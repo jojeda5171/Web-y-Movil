@@ -41,13 +41,13 @@ export class DownloadComponent implements OnInit {
       case 'Agencias':
         this.documentDefinition = {
           content: [
+            {text: DownloadComponent.title, style: 'header', alignment: 'center', margin: [0, 0, 0, 20]},
             {
               table: {
                 headerRows: 1,
-                //widths: ['*', '*', '*'],
+                widths: ['*', '*', '*'],
                 body: [
-                  [DownloadComponent.header[0].title, DownloadComponent.header[1].title, DownloadComponent.header[2].title],
-                  //...this.records.map((item) => [item._id, item.name, item.address])
+                  [ DownloadComponent.header[0].title, DownloadComponent.header[1].title, DownloadComponent.header[2].title],
                   ...DownloadComponent.data.map((item) => [item._id, item.name, item.address])
                 ]
               }
@@ -58,12 +58,12 @@ export class DownloadComponent implements OnInit {
       case 'Canales':
         this.documentDefinition = {
           content: [
+            {text: DownloadComponent.title, style: 'header', alignment: 'center', margin: [0, 0, 0, 20]},
             {
               table: {
                 headerRows: 1,
-                //widths: ['*', '*', '*'],
+                widths: ['*', '*', '*'],
                 body: [
-                  //...this.records.map((item) => [item._id, item.name, item.address])
                   [DownloadComponent.header[0].title, DownloadComponent.header[1].title, DownloadComponent.header[2].title],
                   ...DownloadComponent.data.map((item) => [item._id, item.name, item.tipe])
                 ]
@@ -75,12 +75,12 @@ export class DownloadComponent implements OnInit {
       case 'Clientes':
         this.documentDefinition = {
           content: [
+            {text: DownloadComponent.title, style: 'header', alignment: 'center', margin: [0, 0, 0, 20]},
             {
               table: {
                 headerRows: 1,
-                //widths: ['*', '*', '*'],
+                widths: ['*', '*', '*','*'],
                 body: [
-                  //...this.records.map((item) => [item._id, item.name, item.address])
                   [DownloadComponent.header[0].title, DownloadComponent.header[1].title, DownloadComponent.header[2].title, DownloadComponent.header[3].title],
                   ...DownloadComponent.data.map((item) => [item._id, item.name, item.lastname, item.phone])
                 ]
@@ -92,9 +92,11 @@ export class DownloadComponent implements OnInit {
       case 'Mecanicos':
         this.documentDefinition = {
           content: [
+            {text: DownloadComponent.title, style: 'header', alignment: 'center', margin: [0, 0, 0, 20]},
             {
               table: {
                 headerRows: 1,
+                widths: ['*', '*', '*', '*'],
                 body: [
                   [DownloadComponent.header[0].title, DownloadComponent.header[1].title, DownloadComponent.header[2].title, DownloadComponent.header[3].title],
                   ...DownloadComponent.data.map((item) => [item._id, item.name, item.lastname, item.phone])
@@ -107,9 +109,11 @@ export class DownloadComponent implements OnInit {
       case 'Seguimiento':
         this.documentDefinition = {
           content: [
+            {text: DownloadComponent.title, style: 'header', alignment: 'center', margin: [0, 0, 0, 20]},
             {
               table: {
                 headerRows: 1,
+                widths: ['*', '*', '*', '*'],
                 body: [
                   [DownloadComponent.header[0].title, DownloadComponent.header[1].title, DownloadComponent.header[2].title, DownloadComponent.header[3].title],
                   ...DownloadComponent.data.map((item) => [item._id, item.tipe, item.client, item.agencia])
@@ -122,9 +126,11 @@ export class DownloadComponent implements OnInit {
       case 'Mantenimientos':
         this.documentDefinition = {
           content: [
+            {text: DownloadComponent.title, style: 'header', alignment: 'center', margin: [0, 0, 0, 20]},
             {
               table: {
                 headerRows: 1,
+                widths: ['*', '*', '*', '*'],
                 body: [
                   [DownloadComponent.header[0].title, DownloadComponent.header[1].title, DownloadComponent.header[2].title, DownloadComponent.header[3].title],
                   ...DownloadComponent.data.map((item) => [item._id, item.tipe, item.client, item.agencia])
@@ -140,13 +146,12 @@ export class DownloadComponent implements OnInit {
   openPdfTables() {
     this.controlador();
     const pdf = pdfMake.createPdf(this.documentDefinition);
-    pdf.fileName = DownloadComponent.fileName;
     pdf.open();
   }
 
   downloadPdfTables() {
     this.controlador();
-    pdfMake.createPdf(this.documentDefinition).download();
+    pdfMake.createPdf(this.documentDefinition).download(DownloadComponent.fileName + '.pdf');
   }
 
   printPdfTables() {
