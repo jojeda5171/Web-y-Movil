@@ -1,9 +1,13 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DownloadComponent } from 'src/app/shared/components/download/download.component';
 import { KeypadButton } from 'src/app/shared/interfaces/keypad.interface';
 import { MetaDataColumn } from 'src/app/shared/interfaces/metacolumn.interface';
 import { environment } from 'src/environments/environment';
+import { FormComponent } from '../../components/form/form.component';
+import { AgenciaService } from '../../services/agencia.service';
 
 @Component({
   selector: 'cmv-page-list',
@@ -54,7 +58,7 @@ export class PageListComponent implements OnInit {
     { icon: "add", tooltip: "AGREGAR", color: "primary", action: "NEW" }
   ]
 
-  constructor(private bottomSheet: MatBottomSheet) {
+  constructor(private bottomSheet: MatBottomSheet, private agenciaService: AgenciaService, private dialog: MatDialog, private snackBar: MatSnackBar) {
     this.loadAgencies();
   }
 
@@ -62,9 +66,15 @@ export class PageListComponent implements OnInit {
   }
 
   loadAgencies() {
-    this.data = this.records;
-    this.totalRecords = this.records.length;
-    this.changePage(0);
+    this.agenciaService.loadAgencies().subscribe(data => {
+      this.records = data;
+      this.totalRecords = this.records.length;
+      this.changePage(0);
+    }, error => {
+      console.log(error);
+    }
+    );
+
   }
 
   changePage(page: number) {
@@ -73,8 +83,41 @@ export class PageListComponent implements OnInit {
     this.data = this.records.slice(skip, skip + pageSize);
   }
 
-  openForm() { }
-  delete(id: any) { }
+  openForm(row: any = null) {
+    const options = {
+      panelClass: 'panel-container',
+      disableClose: true,
+      data: row
+    };
+    const reference: MatDialogRef<FormComponent> = this.dialog.open(FormComponent, options);
+    reference.afterClosed().subscribe((response) => {
+      if (!response) {
+        return;
+      }
+      if (response.id) {
+        const agencia = { ...response };
+        this.agenciaService.updateAgency(response.id, agencia).subscribe(() => {
+          this.loadAgencies();
+          this.showMessage('Registro actualizado');
+        })
+      } else {
+        const agencia = { ...response };
+        this.agenciaService.addAgency(agencia).subscribe(() => {
+          this.loadAgencies();
+          this.showMessage('Registro exitoso');
+        })
+      }
+    });
+
+  }
+
+  delete(id: any) {
+    console.log(id);
+    this.agenciaService.deleteAgency(id).subscribe(() => {
+      this.loadAgencies();
+      this.showMessage('Registro eliminado');
+    });
+  }
 
   doAction(action: string) {
     switch (action) {
@@ -87,11 +130,15 @@ export class PageListComponent implements OnInit {
     }
   }
 
-  showBottomSheet(title: string, fileName: string, data: any, header:any) {
+  showBottomSheet(title: string, fileName: string, data: any, header: any) {
     this.bottomSheet.open(DownloadComponent);
     DownloadComponent.title = title;
     DownloadComponent.fileName = fileName;
     DownloadComponent.data = data;
     DownloadComponent.header = header;
+  }
+
+  showMessage(message: string, duration: number = 5000) {
+    this.snackBar.open(message, '', { duration })
   }
 }

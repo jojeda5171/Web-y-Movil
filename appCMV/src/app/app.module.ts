@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableExporterModule } from 'mat-table-exporter';
+import { HttpClientModule } from '@angular/common/http';
 
 //import { PdfMakeWrapper } from 'pdfmake-wrapper';
 //import * as pdfFonts from "pdfmake/build/vfs_fonts";
@@ -22,6 +23,7 @@ import { MatTableExporterModule } from 'mat-table-exporter';
     CoreModule,
     MatSidenavModule,
     MatTableExporterModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

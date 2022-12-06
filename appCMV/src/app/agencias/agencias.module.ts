@@ -6,17 +6,21 @@ import { PageListComponent } from './pages/page-list/page-list.component';
 import { SharedModule } from '../shared/shared.module';
 
 import { MatTableExporterModule } from 'mat-table-exporter';
+import { FormComponent } from './components/form/form.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 @NgModule({
   declarations: [
-    PageListComponent
+    PageListComponent,
+    FormComponent
   ],
   imports: [
     CommonModule,
     AgenciasRoutingModule,
     SharedModule,
-    MatTableExporterModule
+    MatTableExporterModule,
+    MatToolbarModule
   ]
 })
 export class AgenciasModule { }

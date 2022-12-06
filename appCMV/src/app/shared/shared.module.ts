@@ -20,6 +20,10 @@ import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
 import { DownloadComponent } from './components/download/download.component';
 import {MatListModule} from '@angular/material/list';
 import { MatTableExporterModule } from 'mat-table-exporter';
+import {MatDialogModule} from '@angular/material/dialog';
+import { ReactiveFormsModule } from '@angular/forms';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 
@@ -59,7 +63,13 @@ import { MatTableExporterModule } from 'mat-table-exporter';
     KeypadButtonComponent,
     MatBottomSheetModule,
     DownloadComponent,
-    MatListModule
+    MatListModule,
+    MatToolbarModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatSnackBarModule,
+    FlexLayoutModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getPaginatorIntl() }
