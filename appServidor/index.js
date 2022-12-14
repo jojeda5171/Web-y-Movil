@@ -15,6 +15,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/agencias', require('./routes/agencyRoute'))
+app.use('/api/gestores', require('./routes/gestorRoute'))
 
 app.listen(4500, () => {
     console.log('Servidor corriendo en puerto 4500');

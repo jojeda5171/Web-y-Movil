@@ -8,10 +8,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { HttpClientModule } from '@angular/common/http';
 
-//import { PdfMakeWrapper } from 'pdfmake-wrapper';
-//import * as pdfFonts from "pdfmake/build/vfs_fonts";
-//PdfMakeWrapper.setFonts(pdfFonts);
-
 @NgModule({
   declarations: [
     AppComponent
